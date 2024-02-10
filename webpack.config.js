@@ -10,6 +10,7 @@ module.exports = (env, argv) => {
   const filename = (ext) => (isProd ? `[name].[contenthash].bundle.${ext}` : `[name].bundle.${ext}`);
 
   return {
+    target: 'web',
     context: path.resolve(__dirname, 'src'),
     entry: {
       main: ['core-js/stable', 'regenerator-runtime/runtime', './index.js'],
@@ -26,6 +27,13 @@ module.exports = (env, argv) => {
         '@core': path.resolve(__dirname, 'src', 'core'),
       },
     },
+    devServer: {
+      port: 3000,
+      open: true,
+      hot: true,
+      watchFiles: './',
+    },
+    devtool: isDev ? 'source-map' : false,
     plugins: [
       new HtmlWebpackPlugin({
         template: './index.html',
@@ -37,7 +45,6 @@ module.exports = (env, argv) => {
         filename: filename('css'),
       }),
     ],
-    devtool: isDev ? 'source-map' : false,
     module: {
       rules: [
         {
