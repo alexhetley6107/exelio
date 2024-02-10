@@ -1,3 +1,1 @@
-import './scss/index.scss';
-
-console.log('HELLO EXEL');
+console.log('HELLO EXcEL');

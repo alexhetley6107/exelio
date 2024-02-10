@@ -12,7 +12,7 @@ module.exports = {
   },
   extends: ['eslint:recommended', 'google'],
   rules: {
-    semi: 'on',
     'comma-dangle': 'off',
+    'linebreak-style': 0,
   },
 };
