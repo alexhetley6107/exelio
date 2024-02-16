@@ -1,3 +1,5 @@
+import { getMethodName } from './utils';
+
 export class DomListener {
   constructor($root, listeners = []) {
     if (!$root) {
@@ -8,7 +10,15 @@ export class DomListener {
   }
 
   initDOMListeners() {
-    console.log(this.listeners);
+    this.listeners.forEach((listener) => {
+      const method = getMethodName(listener);
+
+      if (!this[method]) {
+        throw new Error(`Method ${method} is not implemented in ${this.name} Component`);
+      }
+
+      this.$root.on(listener, this[method].bind(this));
+    });
   }
 
   removeDOMListeners() {}
