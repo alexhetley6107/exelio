@@ -16,10 +16,10 @@ function createCol(col) {
     </div>
   `;
 }
-function createRow(content) {
+function createRow(index, content) {
   return `
     <div class="row">
-      <div class="row-info"></div>
+      <div class="row-info">${index ?? ''}</div>
       <div class="row-data">${content}</div>
     </div>
   `;
@@ -40,7 +40,7 @@ export function createTable(rowsCount = 20) {
   for (let i = 0; i < rowsCount; i++) {
     const rowContent = new Array(colsCount).fill('').map(createCell).join('');
 
-    rows.push(createRow(rowContent));
+    rows.push(createRow(i + 1, rowContent));
   }
 
   return rows.join('');
