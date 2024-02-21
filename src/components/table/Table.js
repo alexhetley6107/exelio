@@ -20,14 +20,22 @@ export class Table extends ExcelComponent {
       const $resizer = new Dom(e.target);
       const $parent = $resizer.closest('[data-type="resizable"]');
       const coords = $parent.getCoords();
+      const type = $resizer.data.resize;
 
       const cells = this.$root.findAll(`[data-col="${$parent.data.col}"]`);
 
       document.onmousemove = (event) => {
-        const value = coords.width + event.pageX - coords.right;
-        $parent.$el.style.width = value + 'px';
+        if (type === 'col') {
+          const value = coords.width + event.pageX - coords.right;
+          $parent.$el.style.width = value + 'px';
 
-        cells.forEach((el) => (el.style.width = value + 'px'));
+          cells.forEach((el) => (el.style.width = value + 'px'));
+        } else {
+          const value = coords.height + event.pageY - coords.bottom;
+          $parent.$el.style.height = value + 'px';
+
+          cells.forEach((el) => (el.style.height = value + 'px'));
+        }
       };
 
       document.onmouseup = () => {
