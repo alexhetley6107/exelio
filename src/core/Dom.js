@@ -52,4 +52,8 @@ export class Dom {
   getCoords() {
     return this.$el.getBoundingClientRect();
   }
+
+  get data() {
+    return this.$el.dataset;
+  }
 }
