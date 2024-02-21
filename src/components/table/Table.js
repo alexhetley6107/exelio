@@ -27,12 +27,13 @@ export class Table extends ExcelComponent {
       document.onmousemove = (event) => {
         if (type === 'col') {
           const value = coords.width + event.pageX - coords.right;
-          $parent.$el.style.width = value + 'px';
 
+          $parent.css({ width: value + 'px' });
           cells.forEach((el) => (el.style.width = value + 'px'));
         } else {
           const value = coords.height + event.pageY - coords.bottom;
-          $parent.$el.style.height = value + 'px';
+
+          $parent.css({ height: value + 'px' });
 
           cells.forEach((el) => (el.style.height = value + 'px'));
         }
