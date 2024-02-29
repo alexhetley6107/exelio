@@ -57,11 +57,22 @@ export class Dom {
     return this.$el.dataset;
   }
 
+  css(styles = {}) {
+    Object.keys(styles).forEach((key) => (this.$el.style[key] = styles[key]));
+  }
+
   findAll(selector) {
     return this.$el.querySelectorAll(selector);
   }
 
-  css(styles = {}) {
-    Object.keys(styles).forEach((key) => (this.$el.style[key] = styles[key]));
+  find(selector) {
+    return new Dom(this.$el.querySelector(selector));
+  }
+
+  addClass(className) {
+    this.$el.classList.add(className);
+  }
+  removeClass(className) {
+    this.$el.classList.remove(className);
   }
 }
