@@ -86,4 +86,9 @@ export class Dom {
     }
     return this.data.id;
   }
+
+  focus() {
+    this.$el.focus();
+    return this;
+  }
 }
