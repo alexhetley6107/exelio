@@ -91,4 +91,8 @@ export class Dom {
     this.$el.focus();
     return this;
   }
+
+  text(text) {
+    this.$el.textContent = text;
+  }
 }
