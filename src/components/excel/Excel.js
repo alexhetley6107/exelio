@@ -3,8 +3,10 @@ import { Emitter } from '../../core/Emitter';
 
 export class Excel {
   constructor(selector, options) {
-    this.$el = new Dom(selector);
     this.components = options.components || [];
+    this.store = options.store;
+
+    this.$el = new Dom(selector);
     this.emitter = new Emitter();
   }
 

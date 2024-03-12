@@ -5,9 +5,9 @@ import { Toolbar } from '@/components/toolbar/Toolbar';
 import { Formula } from '@/components/formula/Formula';
 import { Table } from '@/components/table/Table';
 import { rootReducer } from '@/state/rootReducer';
-import { createStore } from '@/state/createStore';
+import { Store } from './state/Store';
 
-const store = createStore(rootReducer);
+const store = new Store(rootReducer);
 
 const excel = new Excel('#app', {
   components: [Header, Toolbar, Formula, Table],
