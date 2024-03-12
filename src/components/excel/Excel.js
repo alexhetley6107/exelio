@@ -13,7 +13,7 @@ export class Excel {
   getRoot() {
     const $root = Dom.create('div', 'excel');
 
-    const componentOptions = { emitter: this.emitter };
+    const componentOptions = { emitter: this.emitter, store: this.store };
 
     this.components = this.components.map((Component) => {
       const $el = Dom.create('div', Component.className);

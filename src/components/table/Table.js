@@ -33,6 +33,8 @@ export class Table extends ExcelComponent {
     this.$on('formula:input', (text) => this.selection.current.text(text));
 
     this.$on('formula:done', () => this.selection.current.focus());
+
+    this.$subscribe((st) => console.log('TableState', st));
   }
 
   selectCell($cell) {
@@ -40,9 +42,18 @@ export class Table extends ExcelComponent {
     this.$emit('table:select', $cell);
   }
 
+  async resizeTable(e) {
+    try {
+      const data = await resizeHandler(e, this.$root);
+      this.$dispatch({ type: 'TABLE_RESIZE', data });
+    } catch (error) {
+      console.warn('Resize error ', error.messae);
+    }
+  }
+
   onMousedown(e) {
     if (shouldResize(e)) {
-      resizeHandler(e, this.$root);
+      this.resizeTable(e);
     } else if (isCell(e)) {
       const $target = new Dom(e.target);
 
@@ -50,7 +61,7 @@ export class Table extends ExcelComponent {
         const $cells = getMatrix($target, this.selection.current).map((id) => this.$root.find(`[data-id="${id}"]`));
         this.selection.selectGroup($cells);
       } else {
-        this.selection.select($target);
+        this.selectCell($target);
       }
     }
   }
