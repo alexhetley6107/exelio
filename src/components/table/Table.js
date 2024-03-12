@@ -4,6 +4,7 @@ import { resizeHandler } from './table.resize';
 import { shouldResize, isCell, getMatrix, getNextSelector } from './table.functions';
 import { TableSelection } from './TableSelection';
 import { Dom } from '../../core/Dom';
+import * as actions from '@/state/actions';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -34,7 +35,7 @@ export class Table extends ExcelComponent {
 
     this.$on('formula:done', () => this.selection.current.focus());
 
-    this.$subscribe((st) => console.log('TableState', st));
+    // this.$subscribe((st) => console.log('TableState', st));
   }
 
   selectCell($cell) {
@@ -45,7 +46,7 @@ export class Table extends ExcelComponent {
   async resizeTable(e) {
     try {
       const data = await resizeHandler(e, this.$root);
-      this.$dispatch({ type: 'TABLE_RESIZE', data });
+      this.$dispatch(actions.tableResize(data));
     } catch (error) {
       console.warn('Resize error ', error.messae);
     }
