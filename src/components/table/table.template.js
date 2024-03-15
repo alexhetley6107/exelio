@@ -25,16 +25,20 @@ function withWidthFrom(state) {
 
 function createCell(state, row) {
   return (_, col) => {
+    const id = `${row}:${col}`;
     const width = getWidth(state.colState, col);
+    const data = state.dataState[id];
     return `
       <div 
         class="cell" 
         contenteditable="" 
         data-col="${col}" 
-        data-id="${row}:${col}"
+        data-id="${id}"
         data-type="cell"
         style="width: ${width}"
-      ></div>
+      >
+      ${data || ''}
+      </div>
     `;
   };
 }
