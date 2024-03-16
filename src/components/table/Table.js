@@ -6,6 +6,7 @@ import { TableSelection } from './TableSelection';
 import { Dom } from '../../core/Dom';
 import * as actions from '@/state/actions';
 import { defaultStyles } from '../../constants';
+import { parseCell } from '../../core/utils';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -32,9 +33,10 @@ export class Table extends ExcelComponent {
     const $cell = this.$root.find('[data-id="0:0"]');
     this.selectCell($cell);
 
-    this.$on('formula:input', (text) => {
-      this.selection.current.text(text);
-      this.updateTextInStore(text);
+    this.$on('formula:input', (value) => {
+      this.selection.current.attr('data-value', value);
+      this.selection.current.text(parseCell(value));
+      this.updateTextInStore(value);
     });
 
     this.$on('formula:done', () => this.selection.current.focus());

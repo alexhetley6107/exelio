@@ -55,3 +55,16 @@ export function debounce(fn, wait) {
 
   return delayed;
 }
+
+export function parseCell(value = '') {
+  if (value.startsWith('=')) {
+    try {
+      return eval(value.slice(1));
+    } catch (error) {
+      console.warn('Cell parse error');
+      return value;
+    }
+  }
+
+  return value;
+}

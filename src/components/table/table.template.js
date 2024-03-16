@@ -1,4 +1,4 @@
-import { toInlineStyles } from '../../core/utils';
+import { parseCell, toInlineStyles } from '@/core/utils';
 import { defaultStyles } from '@/constants';
 
 const CODES = {
@@ -38,13 +38,12 @@ function createCell(state, row) {
       <div 
         class="cell" 
         contenteditable="" 
+        style="${styles}; width: ${width}"
+        data-type="cell"
         data-col="${col}" 
         data-id="${id}"
-        data-type="cell"
-        style="${styles}; width: ${width}"
-      >
-      ${data || ''}
-      </div>
+        data-value="${data || ''}"
+      >${parseCell(data) || ''}</div>
     `;
   };
 }
