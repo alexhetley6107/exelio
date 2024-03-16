@@ -7,37 +7,37 @@ function createButton(button) {
   `;
 }
 
-export function createToolbar() {
+export function createToolbar(s) {
   const buttons = [
     {
       icon: 'format_align_left',
-      active: false,
+      active: s['textAlign'] === 'left',
       value: { textAlign: 'left' },
     },
     {
       icon: 'format_align_center',
-      active: false,
+      active: s['textAlign'] === 'center',
       value: { textAlign: 'center' },
     },
     {
       icon: 'format_align_right',
-      active: false,
+      active: s['textAlign'] === 'right',
       value: { textAlign: 'right' },
     },
     {
       icon: 'format_bold',
-      active: false,
-      value: { fontWeight: 'bold' },
+      active: s['fontWeight'] === 'bold',
+      value: { fontWeight: s['fontWeight'] === 'bold' ? 'normal' : 'bold' },
     },
     {
       icon: 'format_italic',
-      active: false,
-      value: { fontStyle: 'italic' },
+      active: s['fontStyle'] === 'italic',
+      value: { fontStyle: s['fontStyle'] === 'italic' ? 'normal' : 'italic' },
     },
     {
       icon: 'format_underlined',
-      active: false,
-      value: { textDecoration: 'underlined' },
+      active: s['textDecoration'] === 'underlined',
+      value: { textDecoration: s['textDecoration'] === 'underlined' ? 'none' : 'underlined' },
     },
   ];
 

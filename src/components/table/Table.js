@@ -38,7 +38,7 @@ export class Table extends ExcelComponent {
 
     this.$on('formula:done', () => this.selection.current.focus());
 
-    // this.$subscribe((st) => console.log('TableState', st));
+    this.$on('toolbar:applyStyle', (style) => console.log(style));
   }
 
   selectCell($cell) {
