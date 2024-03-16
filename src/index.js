@@ -1,26 +1,30 @@
 import '@/scss/index.scss';
-import { Excel } from '@/components/excel/Excel';
-import { Header } from '@/components/header/Header';
-import { Toolbar } from '@/components/toolbar/Toolbar';
-import { Formula } from '@/components/formula/Formula';
-import { Table } from '@/components/table/Table';
-import { rootReducer } from '@/state/rootReducer';
-import { Store } from '@/state/Store';
-import { initialState } from '@/state/initialState';
-import { browserStorage } from '@/core/utils';
-import { debounce } from './core/utils';
+import { Router } from './core/routing/Router';
 
-const store = new Store(rootReducer, initialState);
+// import { Excel } from '@/components/excel/Excel';
+// import { Header } from '@/components/header/Header';
+// import { Toolbar } from '@/components/toolbar/Toolbar';
+// import { Formula } from '@/components/formula/Formula';
+// import { Table } from '@/components/table/Table';
+// import { rootReducer } from '@/state/rootReducer';
+// import { Store } from '@/state/Store';
+// import { initialState } from '@/state/initialState';
+// import { browserStorage } from '@/core/utils';
+// import { debounce } from './core/utils';
 
-const stateListener = debounce((state) => {
-  browserStorage('excel-state', state);
-}, 300);
+// const store = new Store(rootReducer, initialState);
 
-store.subscribe(stateListener);
+// const stateListener = debounce((state) => {
+//   browserStorage('excel-state', state);
+// }, 300);
 
-const excel = new Excel('#app', {
-  components: [Header, Toolbar, Formula, Table],
-  store,
-});
+// store.subscribe(stateListener);
 
-excel.render();
+// const excel = new Excel('#app', {
+//   components: [Header, Toolbar, Formula, Table],
+//   store,
+// });
+
+// excel.render();
+
+new Router('#app', {});
