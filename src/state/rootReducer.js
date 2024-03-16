@@ -1,4 +1,4 @@
-import { CHANGE_STYLES, CHANGE_TEXT, TABLE_RESIZE } from './types';
+import { APPLY_STYLE, CHANGE_STYLES, CHANGE_TEXT, TABLE_RESIZE } from './types';
 
 export function rootReducer(state, action) {
   switch (action.type) {
@@ -11,6 +11,13 @@ export function rootReducer(state, action) {
     }
     case CHANGE_STYLES: {
       return { ...state, currentStyles: action.data };
+    }
+    case APPLY_STYLE: {
+      const value = state['stylesState'] || {};
+      action.data.ids.forEach((id) => {
+        value[id] = { ...value[id], ...action.data.value };
+      });
+      return { ...state, stylesState: value, currentStyles: { ...state.currentStyles, ...action.data.value } };
     }
     default:
       return state;
