@@ -2,6 +2,7 @@ import { ExcelComponent } from '@/core/ExcelComponent';
 import { Dom } from '@/core/Dom';
 import { defaultTitle } from '@/constants';
 import * as actions from '@/state/actions';
+import { debounce } from '../../core/utils';
 
 export class Header extends ExcelComponent {
   static className = 'excel__header';
@@ -12,6 +13,10 @@ export class Header extends ExcelComponent {
       listeners: ['input'],
       ...options,
     });
+  }
+
+  prepare() {
+    this.onInput = debounce(this.onInput, 300);
   }
 
   toHTML() {

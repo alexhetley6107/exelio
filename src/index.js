@@ -8,12 +8,15 @@ import { rootReducer } from '@/state/rootReducer';
 import { Store } from '@/state/Store';
 import { initialState } from '@/state/initialState';
 import { browserStorage } from '@/core/utils';
+import { debounce } from './core/utils';
 
 const store = new Store(rootReducer, initialState);
 
-store.subscribe((state) => {
+const stateListener = debounce((state) => {
   browserStorage('excel-state', state);
-});
+}, 300);
+
+store.subscribe(stateListener);
 
 const excel = new Excel('#app', {
   components: [Header, Toolbar, Formula, Table],
