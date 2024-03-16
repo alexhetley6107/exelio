@@ -40,7 +40,6 @@ export class Table extends ExcelComponent {
     this.$on('formula:done', () => this.selection.current.focus());
 
     this.$on('toolbar:applyStyle', (style) => {
-      console.log(style);
       this.selection.applyStyle(style);
     });
   }
@@ -49,7 +48,9 @@ export class Table extends ExcelComponent {
     this.selection.select($cell);
     this.$emit('table:select', $cell);
 
-    console.log($cell.getStyles(Object.keys(defaultStyles)));
+    const styles = $cell.getStyles(Object.keys(defaultStyles));
+    console.log('STYLES to dispatch');
+    this.$dispatch(actions.changeStyles(styles));
   }
 
   async resizeTable(e) {

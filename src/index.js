@@ -12,7 +12,6 @@ import { browserStorage } from '@/core/utils';
 const store = new Store(rootReducer, initialState);
 
 store.subscribe((state) => {
-  console.log('App', state);
   browserStorage('excel-state', state);
 });
 
