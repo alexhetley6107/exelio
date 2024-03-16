@@ -36,8 +36,8 @@ export function createToolbar(s) {
     },
     {
       icon: 'format_underlined',
-      active: s['textDecoration'] === 'underlined',
-      value: { textDecoration: s['textDecoration'] === 'underlined' ? 'none' : 'underlined' },
+      active: s['textDecoration'] === 'underline',
+      value: { textDecoration: s['textDecoration'] === 'underline' ? 'none' : 'underline' },
     },
   ];
 
