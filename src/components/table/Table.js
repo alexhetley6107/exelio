@@ -4,6 +4,9 @@ import { resizeHandler } from './table.resize';
 import { shouldResize, isCell, getMatrix, getNextSelector } from './table.functions';
 import { TableSelection } from './TableSelection';
 import { Dom } from '../../core/Dom';
+import * as actions from '@/state/actions';
+import { defaultStyles } from '../../constants';
+import { parseCell } from '../../core/utils';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -17,7 +20,7 @@ export class Table extends ExcelComponent {
   }
 
   toHTML() {
-    return createTable(20);
+    return createTable(20, this.store.getState());
   }
 
   prepare() {
@@ -30,19 +33,46 @@ export class Table extends ExcelComponent {
     const $cell = this.$root.find('[data-id="0:0"]');
     this.selectCell($cell);
 
-    this.$on('formula:input', (text) => this.selection.current.text(text));
+    this.$on('formula:input', (value) => {
+      this.selection.current.attr('data-value', value);
+      this.selection.current.text(parseCell(value));
+      this.updateTextInStore(value);
+    });
 
     this.$on('formula:done', () => this.selection.current.focus());
+
+    this.$on('toolbar:applyStyle', (value) => {
+      this.selection.applyStyle(value);
+      this.$dispatch(
+        actions.applyStyle({
+          value,
+          ids: this.selection.selectedIds,
+        })
+      );
+    });
   }
 
   selectCell($cell) {
     this.selection.select($cell);
     this.$emit('table:select', $cell);
+
+    const styles = $cell.getStyles(Object.keys(defaultStyles));
+    console.log('STYLES to dispatch');
+    this.$dispatch(actions.changeStyles(styles));
+  }
+
+  async resizeTable(e) {
+    try {
+      const data = await resizeHandler(e, this.$root);
+      this.$dispatch(actions.tableResize(data));
+    } catch (error) {
+      console.warn('Resize error ', error.message);
+    }
   }
 
   onMousedown(e) {
     if (shouldResize(e)) {
-      resizeHandler(e, this.$root);
+      this.resizeTable(e);
     } else if (isCell(e)) {
       const $target = new Dom(e.target);
 
@@ -50,7 +80,7 @@ export class Table extends ExcelComponent {
         const $cells = getMatrix($target, this.selection.current).map((id) => this.$root.find(`[data-id="${id}"]`));
         this.selection.selectGroup($cells);
       } else {
-        this.selection.select($target);
+        this.selectCell($target);
       }
     }
   }
@@ -67,7 +97,12 @@ export class Table extends ExcelComponent {
     }
   }
 
+  updateTextInStore(value) {
+    this.$dispatch(actions.changeText({ id: this.selection.current.id(), value }));
+  }
+
   onInput(e) {
-    this.$emit('table:input', new Dom(e.target));
+    const value = new Dom(e.target).text();
+    this.updateTextInStore(value);
   }
 }

@@ -61,6 +61,13 @@ export class Dom {
     Object.keys(styles).forEach((key) => (this.$el.style[key] = styles[key]));
   }
 
+  getStyles(styles = []) {
+    return styles.reduce((res, s) => {
+      res[s] = this.$el.style[s];
+      return res;
+    }, {});
+  }
+
   findAll(selector) {
     return this.$el.querySelectorAll(selector);
   }
@@ -95,7 +102,7 @@ export class Dom {
   }
 
   text(text) {
-    if (typeof text === 'string') {
+    if (typeof text !== 'undefined') {
       this.$el.textContent = text;
       return this;
     }
@@ -103,5 +110,12 @@ export class Dom {
       return this.$el.value.trim();
     }
     return this.$el.textContent.trim();
+  }
+
+  attr(name, value) {
+    if (value) {
+      this.$el.setAttribute(name, value);
+    }
+    return this.$el.getAttribute(name);
   }
 }
