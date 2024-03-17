@@ -4,10 +4,12 @@ function toHTML(key) {
   const table = browserStorage(key);
   const id = key.split(':')[1];
 
+  const date = new Date(table.openedDate);
+
   return `
     <li class="db__record">
       <a href="#excel/${id}">${table.title}</a>
-      <strong>12.06.2020</strong>
+      <strong>${date.toLocaleDateString()} ${date.toLocaleTimeString()}</strong>
     </li>
   `;
 }

@@ -11,6 +11,7 @@ const defaultState = {
 
   currentText: '',
   currentStyles: defaultStyles,
+  openedDate: new Date().toJSON(),
 };
 
 function normalize(state) {
