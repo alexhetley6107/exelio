@@ -68,3 +68,11 @@ export function parseCell(value = '') {
 
   return value;
 }
+
+export function getStorageName(param) {
+  return 'excel:' + param;
+}
+
+export function getClone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}

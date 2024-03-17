@@ -9,7 +9,7 @@ export class Store {
     this.listeners.push(fn);
     return {
       unsubscribe() {
-        this.listeners = this.listeners.filter((l) => l !== fn);
+        this.listeners = this.listeners?.filter((l) => l !== fn);
       },
     };
   }

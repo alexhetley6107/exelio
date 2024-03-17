@@ -1,8 +1,8 @@
-import { browserStorage } from '@/core/utils';
 import { defaultStyles, defaultTitle } from '@/constants';
+import { getClone } from '@/core/utils';
 
 const defaultState = {
-  tittle: defaultTitle,
+  title: defaultTitle,
 
   colState: {},
   rowState: {},
@@ -11,10 +11,13 @@ const defaultState = {
 
   currentText: '',
   currentStyles: defaultStyles,
+  openedDate: new Date().toJSON(),
 };
 
-export const initialState = browserStorage('excel-state') ? normalize(browserStorage('excel-state')) : defaultState;
+function normalize(state) {
+  return { ...state, currentText: '', currentStyles: defaultStyles };
+}
 
-function normalize(styles) {
-  return { ...styles, currentText: '', currentStyles: defaultStyles };
+export function normalizeInitialState(state) {
+  return state ? normalize(state) : getClone(defaultState);
 }
