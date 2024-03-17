@@ -2,7 +2,7 @@ import { defaultStyles, defaultTitle } from '@/constants';
 import { getClone } from '@/core/utils';
 
 const defaultState = {
-  tittle: defaultTitle,
+  title: defaultTitle,
 
   colState: {},
   rowState: {},
