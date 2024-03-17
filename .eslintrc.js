@@ -6,9 +6,15 @@ module.exports = {
     },
   },
   env: {
+    // eslint-disable-next-line quote-props
     browser: true,
+    // eslint-disable-next-line quote-props
     node: true,
+    // eslint-disable-next-line quote-props
     es6: true,
+    'jest/globals': true,
+    // eslint-disable-next-line quote-props
+    jest: true,
   },
   extends: ['google'],
   rules: {
@@ -19,4 +25,5 @@ module.exports = {
     'max-len': 0,
     ['indent']: 0,
   },
+  plugins: ['jest'],
 };
