@@ -6,16 +6,17 @@ import { Formula } from '@/components/formula/Formula';
 import { Table } from '@/components/table/Table';
 import { rootReducer } from '@/state/rootReducer';
 import { Store } from '@/state/Store';
-import { initialState } from '@/state/initialState';
 import { browserStorage } from '@/core/utils';
-import { debounce } from '@/core/utils';
+import { debounce, getStorageName } from '@/core/utils';
+import { normalizeInitialState } from '@/state/initialState';
 
 export class ExcelPage extends Page {
   getRoot() {
-    const store = new Store(rootReducer, initialState);
+    const state = browserStorage(getStorageName(this.params));
+    const store = new Store(rootReducer, normalizeInitialState(state));
 
     const stateListener = debounce((state) => {
-      browserStorage('excel-state', state);
+      browserStorage(getStorageName(this.params), state);
     }, 300);
 
     store.subscribe(stateListener);
