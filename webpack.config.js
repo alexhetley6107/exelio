@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESlintWebpackPlugin = require('eslint-webpack-plugin');
 
-module.exports = (env, argv) => {
+module.exports = (_, argv) => {
   const isProd = argv.mode === 'production';
   const isDev = !isProd;
 
@@ -13,10 +13,10 @@ module.exports = (env, argv) => {
   const plugins = () => {
     const base = [
       new HtmlWebpackPlugin({
-        template: './index.html',
+        template: path.resolve(__dirname, 'public', 'index.html'),
       }),
       new CopyWebpackPlugin({
-        patterns: [{ from: path.resolve(__dirname, 'src', 'favicon.ico'), to: path.resolve(__dirname, 'dist') }],
+        patterns: [{ from: path.resolve(__dirname, 'public', 'favicon.ico'), to: path.resolve(__dirname, 'dist') }],
       }),
       new MiniCssExtractPlugin({
         filename: filename('css'),
@@ -32,9 +32,9 @@ module.exports = (env, argv) => {
 
   return {
     target: 'web',
-    context: path.resolve(__dirname, 'src'),
+    // context: path.resolve(__dirname, 'src'),
     entry: {
-      main: ['core-js/stable', 'regenerator-runtime/runtime', './index.js'],
+      main: ['core-js/stable', 'regenerator-runtime/runtime', './src/index.js'],
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
